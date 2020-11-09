@@ -1,0 +1,13 @@
+function [x] = spaceFillingFun(f,t,n)
+x=[]
+
+%%calculate x1(t)
+
+
+%%calculate x2(t)
+
+%
+
+
+
+end
