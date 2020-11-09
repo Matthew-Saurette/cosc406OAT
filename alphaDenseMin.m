@@ -10,7 +10,7 @@ x = spaceFillingFun(n);
 
 %%initial conditions
 P = []; %Poll set
-xkbest = f(x(P(1)));
+xkbest = x(P(1));
 
 
 while norm(xkbest - xbest) >= epsilon %stopping condition
