@@ -5,7 +5,7 @@ n = 2/epsilon;
 
 %initial conditions
 P = [] %Poll set
-xkbest = spaceFillingFun(f,P(1))
+xkbest = spaceFillingFun(f,P(1),n)
 while norm(xkbest - xbest) >= epsilon %stopping condition
     
     %%Calculate convex evelope of spaceFillingFunction
