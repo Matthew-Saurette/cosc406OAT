@@ -1,3 +1,3 @@
-function [g] = spaceFillingFun(f)
+function [g] = spaceFillingFun(f,x)
 
 end
