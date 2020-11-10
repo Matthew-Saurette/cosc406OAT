@@ -30,12 +30,11 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
         P = [P,i*intervalPoints];
     end
     else
-    for i = 0:k
-        if mod(i,2) ~= 0
+    for i = 1:2:k
         P = [P,i*intervalPoints];
     end
     end
-    end
+   
 
     %%Calculate convex evelope of spaceFillingFunction
     
