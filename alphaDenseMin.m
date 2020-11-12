@@ -1,7 +1,7 @@
-function [fbest] = alphaDenseMin(f,xbest,epsilon)
+function [xkbest] = alphaDenseMin(f,xbest,epsilon)
 %%Calculate alpha and pick value n for alpha curve
 alpha = epsilon/2;
-n = 2/epsilon;
+n = ceil(2/epsilon);
 
 
 %%define the space filling curve
@@ -37,10 +37,18 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
    
 
     %%Calculate convex evelope of spaceFillingFunction
+    f_store = [];
+    for i =1:length(P)
+        f_store = [f_store,f(x(P(i)))];
+    end
+    
+    [gxco, gyco] = bb(P,f_store);
     
     
     
     %%Calculate Argmin convex evelope of spaceFillingFunction
+    [M,I] = min(gyco);
+    xkbest = x(gxco(I));
     
     
     
@@ -50,5 +58,6 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
     
     
 end
+disp(k)
 
 end
