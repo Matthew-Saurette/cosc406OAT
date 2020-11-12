@@ -1,14 +1,14 @@
-function [x] = spaceFillingFun(n)
+function [x] = spaceFillingFun(n,d)
 
 
 %%calculate x1(t)
-x1 = @(t) t;
-
-
-%%calculate x2(t)
-x2 = @(t) (1/2)*(1-cos(n*pi*t));
+x1 =@(t) t;
+x = @(t)[x1(t)];
+for i =2:d
+    xi = @(t) (1/2)*(1-cos(n^(i-1)*pi*t));
+    x = @(t)[x(t),xi(t)];
 %
-x = @(t)[x1(t),x2(t)];
+
 
 
 end
