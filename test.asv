@@ -7,7 +7,7 @@
 %Z2 = Z2 * r;
 %surf(X2+0.25,Y2,Z2+0.5)
 
-k=1000 ;
+k=100 ;
 intervalPoints = 1/k;
 P = [];
 for i = 0:k
@@ -26,8 +26,8 @@ for i =1:k
     Y= [Y,xv(2)];
     F = [F,f(xv)];
 end
-t= 0:0.002:1
-g = (t-(xmin)).^2 + ((1/2)*(1-cos(100^(1)*pi*t))-ymin).^2
+t= 0:0.01:1
+g = (t-(xmin)).^2 + ((1/2)*(1-cos(100^(i-1)*pi*t))-ymin).^2
 plot(t,g)
 
 %scatter(X,F)
