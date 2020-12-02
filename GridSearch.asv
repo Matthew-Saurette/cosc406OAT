@@ -1,45 +1,38 @@
-function [min] = GridSearch(f,xbest,epsilon)
+function [minloc] = GridSearch(f,xbest,epsilon)
+    % initial conditions
+    k = 1;
+    minloc = [0,0];
 
-
-%%initial conditions
-k=1 ;
-intervalPoints = 1/k;
-P = [];
-for i = 0:k
-    P = [P,i*intervalPoints];
-end
-minloc = [P(1),P(1)]
-
-while norm(minloc - xbest) >= epsilon %stopping condition
-    
-    %%Expand the poll set
-    k = k*2;
-    intervalPoints = 1/k;
-    P = [];
-    for i = 0:k
-    P = [P,i*intervalPoints];
-    end
-    X =[];
-    for j = 1:length(P)
-        for i = 1:length(P)
-            X=[X,[P(j),P(i)]];
+    % continue checking more points until we are epsilon-close
+    while norm(minloc' - xbest) >= epsilon
+        % define poll set data
+        interval = 1/k;
+        po = [];
+        for i = 0:k
+            positions = [positions,i*interval];
         end
-        
-    end
-    min = inf;
-    minloc = []
-    for i = 1:length(X)
-        tempmin = f(X(i));
-        if tempmin < min
-            min  = tempmin;
-            minloc = X(i);
-        end
-    end
-    
-        
-        
-        
 
+        % store array of polling points
+        X = [];
+        for j = 1:length(positions)
+            for i = 1:length(positions)
+                X = [X,[positions(j);positions(i)]];
+            end
+        end
+        min = inf;
+        minloc = [];
+        for i = 1:length(X)
+            tempmin = f(X(:,i));
+            if tempmin < min
+                min  = tempmin;
+                minloc = X(:,i);
+            end
+        end
+
+        % expand the poll set
+        k = k*2;
+    end
     
-end
+    % print results
+    disp(length(X(1,:)))
 end
