@@ -59,7 +59,6 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
     
     
 end
-disp("SpaceCurve")
-disp(k)
+disp
 
 end

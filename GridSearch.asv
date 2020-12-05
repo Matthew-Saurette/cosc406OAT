@@ -2,37 +2,40 @@ function [minloc] = GridSearch(f,xbest,epsilon)
     % initial conditions
     k = 1;
     minloc = [0,0];
+    totalEvals = 0;
 
     % continue checking more points until we are epsilon-close
-    while norm(minloc' - xbest) >= epsilon
+    while norm(minloc - xbest) >= epsilon
         % define poll set data
         interval = 1/k;
-        po = [];
+        P = [];
         for i = 0:k
-            positions = [positions,i*interval];
+            P = [P,i*interval];
         end
 
         % store array of polling points
-        X = [];
-        for j = 1:length(positions)
-            for i = 1:length(positions)
-                X = [X,[positions(j);positions(i)]];
+        X = zeros(;
+        for j = 1:length(P)
+            for i = 1:length(P)
+                X = [X;[P(j),P(i)]];
             end
         end
+        totalEvals = totalEvals + length(X);
+        
+        % get the lowest function value in poll set
         min = inf;
-        minloc = [];
+        minloc = [0,0];
         for i = 1:length(X)
-            tempmin = f(X(:,i));
+            tempmin = f(X(i,:));
             if tempmin < min
                 min  = tempmin;
-                minloc = X(:,i);
+                minloc = X(i,:);
             end
         end
 
         % expand the poll set
         k = k*2;
     end
-    
-    % print results
-    disp(length(X(1,:)))
+    disp("GridSearch")
+    disp(k^2)
 end

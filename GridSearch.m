@@ -14,10 +14,10 @@ function [minloc] = GridSearch(f,xbest,epsilon)
         end
 
         % store array of polling points
-        X = [];
+        X = zeros(length(P)^2,2);
         for j = 1:length(P)
             for i = 1:length(P)
-                X = [X;[P(j),P(i)]];
+                X(j*length(P) + i,:) = [P(j),P(i)];
             end
         end
         totalEvals = totalEvals + length(X);
@@ -36,4 +36,6 @@ function [minloc] = GridSearch(f,xbest,epsilon)
         % expand the poll set
         k = k*2;
     end
+    disp("GridSearch")
+    disp(k^2)
 end
