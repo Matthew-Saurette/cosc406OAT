@@ -1,6 +1,6 @@
 function [xkbest] = alphaDenseMin(f,xbest,epsilon,d,alpha)
-%%Calculate alpha and pick value n for alpha curve
-%alpha = epsilon/sqrt(2);
+
+%Pick n to achieve alpha-density
 n = ceil(sqrt(d-1)/alpha);
 
 
@@ -8,7 +8,7 @@ n = ceil(sqrt(d-1)/alpha);
 x = spaceFillingFun(n,d); 
 
 
-%%initial conditions
+%%initial conditions for polling set
 k=1 ;
 intervalPoints = 1/k;
 P = [];
@@ -16,6 +16,7 @@ for i = 0:k
     P = [P,i*intervalPoints];
 end
 
+%check to enter algorithm while loop
 xkbest = x(P(1));
 
 
@@ -25,28 +26,28 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
     k = k*2;
     intervalPoints = 1/k;
     P = [];
-    if k ==2
+    if k ==2 %first poll set take all [0,1/2,1]
     for i = 0:k
         P = [P,i*intervalPoints];
     end
-    else
-    for i = 1:2:k
+    else %subseqent poll sets removing previously calculated points
+    for i = 1:2:k 
         P = [P,i*intervalPoints];
     end
     end
    
 
-    %%Calculate convex evelope of spaceFillingFunction
+    %%formating data to be sent to beneath beyond method
     f_store = [];
     for i =1:length(P)
         f_store = [f_store,f(x(P(i)))];
     end
-    
+    %%Calculate convex evelope of spaceFillingFunction
     [gxco, gyco] = bb(P,f_store);
     
     
     
-    %%Calculate Argmin convex evelope of spaceFillingFunction
+    %%Calculate Argmin convex evelope of spaceFillingFunction 
     [M,I] = min(gyco);
     xkbest = x(gxco(I));
     
@@ -58,6 +59,6 @@ while norm(xkbest - xbest) >= epsilon %stopping condition
     
     
 end
-disp(k)
+
 
 end
